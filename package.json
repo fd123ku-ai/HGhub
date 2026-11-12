@@ -14,7 +14,8 @@
     "android:init": "tauri android init",
     "android:icons": "node scripts/sync-android-icons.mjs",
     "android:dev": "tauri android dev",
-    "android:build": "tauri android build"
+    "android:build": "tauri android build --apk --split-per-abi --target aarch64 armv7 x86_64",
+    "android:apk": "bash scripts/build-android-apk.sh"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.12.4",

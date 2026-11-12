@@ -79,13 +79,19 @@ pnpm app:build        # 打包：Windows → NSIS 安装程序；macOS → .app 
 macOS 先装 Xcode Command Line Tools（`xcode-select --install`），打包目标写在
 `src-tauri/tauri.macos.conf.json`（`app` + `dmg`，窗口用系统标题栏 Overlay）。
 
-Android（需 Android SDK + NDK，并配置 `ANDROID_HOME` / `NDK_HOME`）：
+Android（需 Android SDK + NDK，并配置 `ANDROID_HOME` / `NDK_HOME` / `JAVA_HOME`）：
 
 ```bash
 pnpm android:init     # 首次生成 android 工程
 pnpm android:dev      # 真机 / 模拟器调试
-pnpm android:build    # 产出 APK
+pnpm android:build    # 产出未签名 release APK（按 ABI 分包）
+pnpm android:apk      # 一键：init → 编译 → 签名 → artifacts/android/
 ```
+
+`pnpm android:apk` 默认用临时 debug 证书签名，可直接安装到手机自用。
+正式发布请配置 `ANDROID_KEY_BASE64` / `ANDROID_KEY_ALIAS` /
+`ANDROID_KEYSTORE_PASSWORD` / `ANDROID_KEY_PASSWORD`（与 Release CI 相同），
+或打 tag 走 GitHub Actions。多数真机装 **aarch64** 包即可。
 
 ### 环境注意
 
